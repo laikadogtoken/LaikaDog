@@ -277,7 +277,7 @@ contract LaikaDog is IBEP20, Auth {
         && address(this).balance >= autoBuybackAmount;
     }
 
-    function triggerZeusBuyback(uint256 amount, bool triggerBuybackMultiplier) external authorized {
+    function triggerLaikaBuyback(uint256 amount, bool triggerBuybackMultiplier) external authorized {
         buyTokens(amount, DEAD);
         if(triggerBuybackMultiplier){
             buybackMultiplierTriggeredAt = block.timestamp;
@@ -352,15 +352,18 @@ contract LaikaDog is IBEP20, Auth {
         isTxLimitExempt[holder] = exempt;
     }
 
-    function setFees(uint256 _liquidityFee, uint256 _buybackFee, uint256 _reflectionFee, uint256 _marketingFee, uint256 _buyFee, uint256 _feeDenominator) external authorized {
+    function setFees(uint256 _liquidityFee, uint256 _buybackFee, uint256 _reflectionFee, uint256 _marketingFee, uint256 _feeDenominator) external authorized {
         liquidityFee = _liquidityFee;
         buybackFee = _buybackFee;
         reflectionFee = _reflectionFee;
         marketingFee = _marketingFee;
         totalFee = _liquidityFee.add(_buybackFee).add(_reflectionFee).add(_marketingFee);
-        buyFee = _buyFee;
         feeDenominator = _feeDenominator;
         require(totalFee < feeDenominator/4);
+    }
+
+    function setBuyFee(uint256 _buyFee) external authorized {
+        buyFee = _buyFee;
     }
 
     function setFeeReceivers(address _autoLiquidityReceiver, address _marketingFeeReceiver) external authorized {
@@ -401,10 +404,6 @@ contract LaikaDog is IBEP20, Auth {
 
     function withdrawBNB(address to, uint amount) external onlyOwner{
         payable(to).call{value: amount}("");
-    }
-
-    function withdrawToken(address to, uint amount) external onlyOwner{
-        _basicTransfer(address(this), to, amount);
     }
 
     event AutoLiquify(uint256 amountBNB, uint256 amountBOG);
