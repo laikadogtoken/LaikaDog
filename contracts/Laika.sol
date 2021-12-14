@@ -24,7 +24,7 @@ contract LaikaDog is IBEP20, Auth {
     string constant _symbol = "LAI";
     uint8 constant _decimals = 18;
 
-    uint256 _totalSupply = 100_000_000_000 * (10 ** _decimals);
+    uint256 _totalSupply = 1_000_000_000_000 * (10 ** _decimals);
     uint256 public _maxTxAmount = _totalSupply.div(400); // 0.25%
 
     mapping (address => uint256) _balances;
