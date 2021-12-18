@@ -7,4 +7,5 @@ module.exports = async function(deployer) {
   let contract_laika = await LaikaDog.deployed();
   await deployer.deploy(DividendDistributor, LaikaDog.address, LaikaDog.address);
   await DividendDistributor.deployed();
+  await contract_laika.setDividendDistributor(DividendDistributor.address);
 };

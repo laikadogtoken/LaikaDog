@@ -98,9 +98,9 @@ contract LaikaDog is IBEP20, Auth {
     uint256 distributorGas = 500000;
 
     bool public swapEnabled = true;
-    uint256 public swapThreshold = _totalSupply / 100000; // 0.001%
+    uint256 public swapThreshold = _totalSupply / 5000; // 0.02%
     bool inSwap;
-    modifier swapping() { inSwap = true; _; inSwap = false; }
+    modifier swapping() { inSwap = true; _; inSwap = false;}
 
     constructor (
         address _dexRouter
