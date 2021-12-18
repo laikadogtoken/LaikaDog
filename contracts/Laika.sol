@@ -383,7 +383,7 @@ contract LaikaDog is IBEP20, Auth {
         reflectionFee = _reflectionFee;
         marketingFee = _marketingFee;
         totalFee = _liquidityFee.add(_buybackFee).add(_reflectionFee).add(_marketingFee);
-        require(totalFee <= 3000, "Total fee less than 30%");
+        require(totalFee <= 2500, "Total fee less than 25%");
         feeDenominator = _feeDenominator;
         require(totalFee < feeDenominator/4);
     }
