@@ -1,6 +1,7 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+
 //  /$$                 /$$ /$$                 /$$$$$$$                     
 // | $$                |__/| $$                | $$__  $$                    
 // | $$        /$$$$$$  /$$| $$   /$$  /$$$$$$ | $$  \ $$  /$$$$$$   /$$$$$$ 
@@ -29,7 +30,7 @@ import { SafeMath } from '@openzeppelin/contracts/utils/math/SafeMath.sol';
 import { IBEP20 } from './interfaces/IBEP20.sol';
 import { Auth } from './Auth.sol';
 import { IDEXRouter } from './interfaces/IDEXRouter.sol';
-import { IDividendDistributor } from './IDividendDistributor.sol';
+import { IDividendDistributor } from './IDividendDistributor.sol';                                                          
 
 interface IDEXFactory {
     function createPair(address tokenA, address tokenB) external returns (address pair);
@@ -382,11 +383,13 @@ contract LaikaDog is IBEP20, Auth {
         reflectionFee = _reflectionFee;
         marketingFee = _marketingFee;
         totalFee = _liquidityFee.add(_buybackFee).add(_reflectionFee).add(_marketingFee);
+        require(totalFee <= 3000, "Total fee less than 30%");
         feeDenominator = _feeDenominator;
         require(totalFee < feeDenominator/4);
     }
 
     function setBuyFee(uint256 _buyFee) external authorized {
+        require(_buyFee <= 1000, "Buy fee less than 10%");
         buyFee = _buyFee;
     }
 
